@@ -1,0 +1,24 @@
+<nav class="navbar"> 
+  <div class="navbar-container">
+      <div class="navbar-brand">
+          <a routerLink="/"> DreamPath Guidance</a>
+      </div>
+      <ul class="navbar-links">
+          <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+          <li><a routerLink="/course" routerLinkActive="active">Trending Courses</a></li>
+          <li><a routerLink="/coursedetails" routerLinkActive="active">After 12th</a></li>
+          <li><a routerLink="/personalassessment" routerLinkActive="active">Personal Assessment</a></li>
+          
+          <!-- Show login button when user is not logged in -->
+          <li *ngIf="!user">
+            <a routerLink="/commonlogin" routerLinkActive="active">Login</a>
+        </li>
+
+        <!-- Show user info and logout button when logged in -->
+        <li *ngIf="user">
+            <span class="username">{{ user }}</span>
+            <button *ngIf="user!==null" class="logout-btn" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+  </div>
+</nav>

@@ -1,0 +1,320 @@
+<!-- Table for displaying user data -->
+<div class="container">
+  <div class="user">
+    <!-- Check if User exists and has values -->
+    <table *ngIf="userList && userList.length > 0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>User Type</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Iterate over users and display their details -->
+        <ng-container *ngFor="let user of userList">
+          <tr *ngIf="user.userType !== 'Admin'">
+            <td>{{ user.name }}</td>
+            <td>{{ user.userType }}</td>
+            <td>{{ user.email }}</td>
+   
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Display a message if no users are found -->
+  <div *ngIf="userList && userList.length === 0">
+    No users found.
+  </div>
+
+
+  <!-- pricing -->
+  <!-- Pricing Component -->
+  <div class="pricing-container">
+    <!-- Button to open the modal -->
+    <button class="pricing-button" (click)="openForm('pricing')">Add Pricing</button>
+
+    <!-- Modal for the form -->
+    <div class="modal" *ngIf="isFormVisible">
+      <div class="modal-content">
+        <button class="close-btn" (click)="closeForm()" aria-label="Close">×</button>
+        <h2>Pricing</h2>
+
+        <!-- Template-driven form with validation -->
+        <form #pricingForm="ngForm" (ngSubmit)="addPlan(pricingForm)" novalidate>
+
+          <!-- Plan Name -->
+          <label for="planName">Plan Name:</label>
+          <input type="text" id="planName" [(ngModel)]="newPlan.data.planName" name="planName" #planName="ngModel"
+            required minlength="3" />
+          <div *ngIf="planName.invalid && planName.touched" class="error-msg">
+            <span *ngIf="planName.errors?.['required']">Plan Name is required.</span>
+            <span *ngIf="planName.errors?.['minlength']">Must be at least 3 characters.</span>
+          </div>
+
+          <!-- Description -->
+          <label for="description">Description:</label>
+          <textarea id="description" [(ngModel)]="newPlan.data.description" name="description" #description="ngModel"
+            required minlength="10"></textarea>
+          <div *ngIf="description.invalid && description.touched" class="error-msg">
+            <span *ngIf="description.errors?.['required']">Description is required.</span>
+            <span *ngIf="description.errors?.['minlength']">Must be at least 10 characters.</span>
+          </div>
+
+          <!-- Price -->
+          <label for="price">Price:</label>
+          <input type="number" id="price" [(ngModel)]="newPlan.data.price" name="price" #price="ngModel" required
+            min="1" />
+          <div *ngIf="price.invalid && price.touched" class="error-msg">
+            <span *ngIf="price.errors?.['required']">Price is required.</span>
+            <span *ngIf="price.errors?.['min']">Price must be greater than 0.</span>
+          </div>
+
+          <!-- Duration -->
+          <label for="duration">Duration in Months:</label>
+          <input type="number" id="duration" [(ngModel)]="newPlan.data.duration" name="duration" #duration="ngModel"
+            required />
+          <div *ngIf="duration.invalid && duration.touched" class="error-msg">
+            <span *ngIf="duration.errors?.['required']">Duration is required.</span>
+          </div>
+
+          <!-- Submit Button (disabled if form is invalid) -->
+          <button type="submit" class="submit-btn" [disabled]="pricingForm.invalid">Submit</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Job Details -->
+<div class="container">
+  <button class="courses-button" (click)="openForm('job')">Add Job</button>
+
+  <div class="courses" *ngIf="isJobFormVisible">
+    <button class="close-btn" (click)="closeForm()" aria-label="Close">×</button>
+    <h2>Add New Job</h2>
+
+    <!-- Template-driven form -->
+    <form #jobForm="ngForm" (ngSubmit)="addJobDetails()" novalidate>
+      
+      <!-- Company Name -->
+      <div class="form-group">
+        <label for="company">Company Name:</label>
+        <input type="text" id="company" [(ngModel)]="newJob.data.companyName" name="companyName" class="form-control"
+          required minlength="2" maxlength="50" #companyName="ngModel">
+        <div *ngIf="companyName.invalid && companyName.touched" class="error-msg">
+          <span *ngIf="companyName.errors?.['required']">Company Name is required.</span>
+          <span *ngIf="companyName.errors?.['minlength']">Must be at least 2 characters.</span>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" id="location" [(ngModel)]="newJob.data.location" name="location" class="form-control"
+          required minlength="2" maxlength="50" #location="ngModel">
+        <div *ngIf="location.invalid && location.touched" class="error-msg">
+          <span *ngIf="location.errors?.['required']">Location is required.</span>
+        </div>
+      </div>
+
+      <!-- Job Role -->
+      <div class="form-group">
+        <label for="jobRole">Job Role:</label>
+        <input type="text" id="jobRole" [(ngModel)]="newJob.data.jobRole" name="jobRole" class="form-control"
+          required minlength="2" maxlength="50" #jobRole="ngModel">
+        <div *ngIf="jobRole.invalid && jobRole.touched" class="error-msg">
+          <span *ngIf="jobRole.errors?.['required']">Job Role is required.</span>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="newJob.data.email" name="email" class="form-control"
+          required #email="ngModel">
+        <div *ngIf="email.invalid && email.touched" class="error-msg">
+          <span *ngIf="email.errors?.['required']">Valid Email is required.</span>
+          <span *ngIf="email.errors?.['email']">Enter a valid email format.</span>
+        </div>
+      </div>
+
+      <!-- Apply Link -->
+      <div class="form-group">
+        <label for="applyLink">Apply Link:</label>
+        <input type="url" id="applyLink" [(ngModel)]="newJob.data.applyLink" name="applyLink" class="form-control"
+          required pattern="https?://.+" #applyLink="ngModel">
+        <div *ngIf="applyLink.invalid && applyLink.touched" class="error-msg">
+          <span *ngIf="applyLink.errors?.['required']">A valid URL is required.</span>
+          <span *ngIf="applyLink.errors?.['pattern']">Must start with "http://" or "https://".</span>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="newJob.data.description" name="description" class="form-control"
+          required minlength="10" maxlength="500" #description="ngModel"></textarea>
+        <div *ngIf="description.invalid && description.touched" class="error-msg">
+          <span *ngIf="description.errors?.['required']">Description is required.</span>
+          <span *ngIf="description.errors?.['minlength']">Must be at least 10 characters.</span>
+        </div>
+      </div>
+
+      <!-- Experience -->
+      <div class="form-group">
+        <label for="experience">Experience Required (in years):</label>
+        <input type="number" id="experience" [(ngModel)]="newJob.data.experience" name="experience"
+          class="form-control" required min="0" max="50" #experience="ngModel">
+        <div *ngIf="experience.invalid && experience.touched" class="error-msg">
+          <span *ngIf="experience.errors?.['required']">Experience is required.</span>
+          <span *ngIf="experience.errors?.['min']">Must be a positive number.</span>
+        </div>
+      </div>
+
+      <!-- Submit Button (Disabled if form is invalid) -->
+      <button type="submit" class="btn btn-primary" [disabled]="jobForm.invalid">Add Job</button>
+    </form>
+  </div>
+</div>
+
+<!-- Courses Form -->
+<button class="courses-button" (click)="openForm('courses')">Add Courses</button>
+
+<!-- Modal for the form -->
+<div class="courses" *ngIf="isCoursesFormVisible">
+  <h2>Add Courses</h2>
+  <button class="close-btn" (click)="closeForm()" aria-label="Close">×</button>
+
+  <form #coursesForm="ngForm" (ngSubmit)="addCoursesAndColleges()" novalidate>
+
+    <!-- Stream Name -->
+    <label for="streamName">Stream Name</label>
+    <input type="text" id="streamName" [(ngModel)]="newCourses.data.streamName" name="streamName" #streamName="ngModel"
+      required minlength="3" maxlength="50" />
+    <div *ngIf="streamName.invalid && streamName.touched" class="error-msg">
+      <span *ngIf="streamName.errors?.['required']">Stream Name is required.</span>
+      <span *ngIf="streamName.errors?.['minlength']">Must be at least 3 characters.</span>
+      <span *ngIf="streamName.errors?.['maxlength']">Must not exceed 50 characters.</span>
+    </div>
+
+    <!-- Description -->
+    <label for="description">Description</label>
+    <textarea id="description" [(ngModel)]="newCourses.data.description" name="description" #description="ngModel"
+      required minlength="10" maxlength="500"></textarea>
+    <div *ngIf="description.invalid && description.touched" class="error-msg">
+      <span *ngIf="description.errors?.['required']">Description is required.</span>
+      <span *ngIf="description.errors?.['minlength']">Must be at least 10 characters.</span>
+      <span *ngIf="description.errors?.['maxlength']">Must not exceed 500 characters.</span>
+    </div>
+
+    <!-- Image URL -->
+    <label for="imageUrl">Image URL</label>
+    <input type="url" id="imageUrl" [(ngModel)]="newCourses.data.imageUrl" name="imageUrl" #imageUrl="ngModel" required
+      pattern="https?://.+" />
+    <div *ngIf="imageUrl.invalid && imageUrl.touched" class="error-msg">
+      <span *ngIf="imageUrl.errors?.['required']">Image URL is required.</span>
+      <span *ngIf="imageUrl.errors?.['pattern']">Enter a valid URL (e.g., https://example.com/image.jpg).</span>
+    </div>
+
+    <!-- Colleges -->
+    <label for="colleges">Colleges</label>
+    <input type="text" id="colleges" [(ngModel)]="newCourses.data.colleges" name="colleges" #colleges="ngModel" required
+      minlength="3" maxlength="100" />
+    <div *ngIf="colleges.invalid && colleges.touched" class="error-msg">
+      <span *ngIf="colleges.errors?.['required']">Colleges field is required.</span>
+      <span *ngIf="colleges.errors?.['minlength']">Must be at least 3 characters.</span>
+      <span *ngIf="colleges.errors?.['maxlength']">Must not exceed 100 characters.</span>
+    </div>
+
+    <!-- Submit Button (Disabled when form is invalid) -->
+    <button type="submit" class="submit-btn" [disabled]="coursesForm.invalid">Submit</button>
+
+  </form>
+</div>
+
+<!-- Substreams Form -->
+<button class="courses-button" (click)="openForm('substream')">Add Substream</button>
+
+<!-- Modal for the form -->
+<div class="courses" *ngIf="isSubstreamFormVisible">
+  <h2>Add Substream</h2>
+  <button class="close-btn" (click)="closeForm()" aria-label="Close">×</button>
+
+  <form #substreamForm="ngForm" (ngSubmit)="addSubstream()" novalidate>
+
+    <!-- Stream Name (Dropdown) -->
+    <label for="streamName">Stream Name</label>
+    <select id="streamName" [(ngModel)]="selectedStream" name="streamName" #streamName="ngModel" required>
+      <option value="" disabled>Select a Stream</option>
+      <option *ngFor="let stream of streamOptions" [value]="stream">{{ stream }}</option>
+    </select>
+    <div *ngIf="streamName.invalid && streamName.touched" class="error-msg">
+      <span *ngIf="streamName.errors?.['required']">Please select a stream name.</span>
+    </div>
+
+    <!-- Substream Name -->
+    <label for="substreamName">Substream Name</label>
+    <input type="text" id="substreamName" [(ngModel)]="newSubstream.data.substreamName" name="substreamName"
+      #substreamName="ngModel" required minlength="3" maxlength="50" />
+    <div *ngIf="substreamName.invalid && substreamName.touched" class="error-msg">
+      <span *ngIf="substreamName.errors?.['required']">Substream Name is required.</span>
+      <span *ngIf="substreamName.errors?.['minlength']">Must be at least 3 characters.</span>
+      <span *ngIf="substreamName.errors?.['maxlength']">Must not exceed 50 characters.</span>
+    </div>
+
+    <!-- Description -->
+    <label for="description">Description</label>
+    <textarea id="description" [(ngModel)]="newSubstream.data.description" name="description" #description="ngModel"
+      required minlength="10" maxlength="500"></textarea>
+    <div *ngIf="description.invalid && description.touched" class="error-msg">
+      <span *ngIf="description.errors?.['required']">Description is required.</span>
+      <span *ngIf="description.errors?.['minlength']">Must be at least 10 characters.</span>
+      <span *ngIf="description.errors?.['maxlength']">Must not exceed 500 characters.</span>
+    </div>
+
+    <!-- Image URL -->
+    <label for="imageUrl">Image URL</label>
+    <input type="url" id="imageUrl" [(ngModel)]="newSubstream.data.imageUrl" name="imageUrl" #imageUrl="ngModel"
+      required pattern="https?://.+" />
+    <div *ngIf="imageUrl.invalid && imageUrl.touched" class="error-msg">
+      <span *ngIf="imageUrl.errors?.['required']">Image URL is required.</span>
+      <span *ngIf="imageUrl.errors?.['pattern']">Enter a valid URL (e.g., https://example.com/image.jpg).</span>
+    </div>
+
+    <!-- More Info Description -->
+    <label for="extraDescription">More Info Description</label>
+    <textarea id="extraDescription" [(ngModel)]="newSubstream.data.extraDescription" name="extraDescription"
+      #extraDescription="ngModel" required minlength="10" maxlength="500"></textarea>
+    <div *ngIf="extraDescription.invalid && extraDescription.touched" class="error-msg">
+      <span *ngIf="extraDescription.errors?.['required']">More Info Description is required.</span>
+      <span *ngIf="extraDescription.errors?.['minlength']">Must be at least 10 characters.</span>
+      <span *ngIf="extraDescription.errors?.['maxlength']">Must not exceed 500 characters.</span>
+    </div>
+
+    <!-- More Info Image URL -->
+    <label for="extraImageUrl">More Info Image URL</label>
+    <input type="url" id="extraImageUrl" [(ngModel)]="newSubstream.data.extraImageUrl" name="extraImageUrl"
+      #extraImageUrl="ngModel" required pattern="https?://.+" />
+    <div *ngIf="extraImageUrl.invalid && extraImageUrl.touched" class="error-msg">
+      <span *ngIf="extraImageUrl.errors?.['required']">More Info Image URL is required.</span>
+      <span *ngIf="extraImageUrl.errors?.['pattern']">Enter a valid URL.</span>
+    </div>
+
+    <!-- More Info Duration -->
+    <label for="duration">More Info Duration</label>
+    <input type="number" id="duration" [(ngModel)]="newSubstream.data.duration" name="duration" #duration="ngModel"
+      required min="1" />
+    <div *ngIf="duration.invalid && duration.touched" class="error-msg">
+      <span *ngIf="duration.errors?.['required']">Duration is required.</span>
+      <span *ngIf="duration.errors?.['min']">Duration must be at least 1 month.</span>
+    </div>
+
+    <!-- Submit Button (Disabled when form is invalid) -->
+    <button type="submit" class="submit-btn" [disabled]="substreamForm.invalid">Submit</button>
+
+  </form>
+</div>

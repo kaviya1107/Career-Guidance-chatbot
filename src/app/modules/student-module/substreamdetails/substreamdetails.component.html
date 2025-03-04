@@ -1,0 +1,27 @@
+<!-- Image Row -->
+ <div class="container">
+<div class="image-row">
+  <img *ngFor="let subStream of substreamDetails" 
+       [src]="subStream.data.extraImageUrl" 
+       alt="Course" 
+       class="course-image" />
+</div>
+
+<!-- Description Row -->
+<div class="description-row">
+  <div class="course-details" *ngFor="let subStream of substreamDetails">
+    <h3>{{ subStream.data.duration }}</h3>
+    <p>{{ subStream.data.extraDescription }}</p>
+  </div>
+</div>
+
+<!-- Footer Section for Colleges -->
+<footer class="footer">
+  <h2>Top 20 Colleges</h2>
+  <div class="colleges-container">
+    <div class="college-name" *ngFor="let college of colleges">
+      {{ college.collegeName }}
+    </div>
+  </div>
+</footer>
+</div>

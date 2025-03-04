@@ -1,0 +1,11 @@
+<div class="substream-container">
+  <div class="substream-card" *ngFor="let subStream of substream">
+    <img [src]="subStream.data.imageurl" alt="Course" class="course-image" />
+    <div class="course-details">
+      <h3>{{ subStream.data.substream_Name }}</h3>
+      <p>{{ subStream.data.description }}</p>
+
+      <button class="view-more-btn" (click)="navigateTo(subStream._id)">View More Info</button>
+    </div>
+  </div>
+</div>

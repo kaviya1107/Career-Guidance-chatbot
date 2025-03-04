@@ -1,0 +1,103 @@
+ul {
+  list-style-type: none; /* Removes default list bullets */
+  padding-left: 0; /* Removes default padding */
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+ul li {
+  margin-bottom: 5px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+ul li::before {
+  content: '✔️'; /* You can use a checkmark or any symbol you prefer */
+  margin-right: 8px;
+}
+
+ul li.invalid::before {
+  content: '❌'; /* Red cross symbol for invalid items */
+}
+
+.container {
+    width: 350px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .create-account {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .create-account p {
+    font-size: 14px;
+  }
+  
+  .create-account a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .create-account a:hover {
+    text-decoration: underline;
+  }
+  
+  .text-danger {
+    color: red;
+    font-size: 12px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  input[type="email"], input[type="password"], select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+ 
+ 

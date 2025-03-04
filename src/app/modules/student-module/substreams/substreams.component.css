@@ -1,0 +1,197 @@
+/* Container for substream cards */
+.substream-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+    gap: 15px; /* Consistent spacing */
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .substream-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .substream-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* Substream Card Styling */
+.substream-card {
+    background: #ffffff;
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px; /* Comfortable padding */
+    
+    width: 280px; /* Ensures a clean look */
+    margin: auto;
+}
+
+.substream-card:hover {
+    transform: translateY(-4px); /* Lift effect on hover */
+}
+
+/* Course Image */
+.course-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Course Details */
+.course-details {
+    padding: 10px;
+    text-align: center;
+}
+
+.course-details h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: #333;
+    font-weight: bold;
+}
+
+.course-details p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+/* Buttons */
+.course-details button {
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 5px;
+    margin-top: 8px;
+    background-color: skyblue;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.course-details button:hover {
+    background-color: deepskyblue;
+}
+
+.view-more-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.view-more-btn:hover {
+    background-color: #0056b3;
+}
+/* Container styles */
+.courses-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Card styles */
+  .course-card, .substream-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .course-card:hover, .substream-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Image styles */
+  .course-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .course-card:hover .course-image, .substream-card:hover .course-image {
+    transform: scale(1.1);
+  }
+  
+  /* Details styles */
+  .course-details {
+    padding: 15px;
+  }
+  
+  .course-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .course-details p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  /* Button styles */
+  .btn, .view-more-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  
+  .btn:hover, .view-more-btn:hover {
+    background: linear-gradient(135deg, #a777e3, #6e8efb);
+    transform: translateY(-3px);
+  }
+  
+  .btn:active, .view-more-btn:active {
+    transform: translateY(1px);
+  }
+  
+  /* Animation for loading effect */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .course-card, .substream-card {
+    animation: fadeIn 0.5s ease forwards;
+  }
+  

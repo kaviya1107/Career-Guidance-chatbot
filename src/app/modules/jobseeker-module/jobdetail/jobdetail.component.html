@@ -1,0 +1,18 @@
+<div *ngIf="jobs.length > 0; else noJobs">
+    <h2>Job Listings</h2>
+    <ul>
+      <li *ngFor="let job of jobs">
+        <h3>{{ job.companyName }}</h3>
+        <p><strong>Location:</strong> {{ job.location }}</p>
+        <p><strong>Role:</strong> {{ job.jobRole }}</p>
+        <p><strong>Email:</strong> {{ job.email }}</p>
+        <p><strong>Apply:</strong> <a [href]="job.applyLink" target="_blank">Click Here</a></p>
+        <p><strong>Description:</strong> {{ job.description }}</p>
+        <p><strong>Experience:</strong> {{ job.experience }} years</p>
+        <hr />
+      </li>
+    </ul>
+  </div>
+  <ng-template #noJobs>
+    <p>No jobs found.</p>
+  </ng-template>

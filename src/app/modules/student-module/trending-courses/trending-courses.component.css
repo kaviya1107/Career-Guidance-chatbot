@@ -1,0 +1,64 @@
+/* Main Container */
+.details-container {
+    padding: 40px 20px;
+    min-height: 100vh;
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  /* Title */
+  .details-container h2 {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 20px;
+  }
+  
+  /* Substream Card - Each Row Takes Full Width */
+  .substreamdetails-card {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.3); /* Glassmorphism effect */
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease-in-out;
+    width: 90%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Hover Effect */
+  .substreamdetails-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Course Image */
+  .course-image {
+    width: 400px; /* Fixed width */
+    height: 250px; /* Fixed height */
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+  }
+  
+  /* Course Details */
+  .course-details {
+    flex: 1; /* Take up remaining space */
+    text-align: left;
+  }
+  
+  .course-details h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .course-details p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  

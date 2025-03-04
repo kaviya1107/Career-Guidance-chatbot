@@ -1,0 +1,89 @@
+
+<!-- <iframe width="350" height="430" allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/b623d857-8492-450a-be92-b1486c0f0c5e"></iframe> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="home-container">
+        <h1>Welcome to DreamPath Guidance</h1>
+        
+        <p>Your journey to success starts here!</p>
+      
+        <div class="features">
+          <div class="feature-card">
+            <h3>Trending Courses</h3>
+            <p>Explore the most popular courses to enhance your skills and knowledge.</p>
+            <a routerLink="/trending-courses" class="btn">Explore Courses</a>
+    
+          </div>
+          <div class="feature-card">
+    
+            <h3>Personal Assessment</h3>
+            <p>Get personalized guidance to choose the right path after 12th.</p>
+            <a routerLink="/personal-assessment" class="btn">Start Assessment</a>
+          </div>
+    
+          <div class="feature-card">
+            <h3>Help Center</h3>
+            <p>Have questions? We're here to help you at every step.</p>
+            <a routerLink="/help-center" class="btn">Get Help</a>
+          </div>
+        </div>
+    
+        <div class="extra-content">
+          <h2>Why Choose DreamPath Guidance</h2>
+          <p>DreamPath Guidance offers a wide range of courses and assessments to guide you through the next steps in your educational journey.</p>
+          <div class="extra-cards">
+            <div class="extra-card">
+              <h3>Expert Guidance</h3>
+              <p>Learn from industry experts with years of experience in their fields.</p>
+            </div>
+            <div class="extra-card">
+              <h3>Affordable Courses</h3>
+              <p>Access top-quality education at a fraction of the cost.</p>
+            </div>
+            <div class="extra-card">
+              <h3>Flexible Learning</h3>
+              <p>Study at your own pace, anywhere, anytime.</p>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+      
+    
+      <footer class="footer">
+        <div class="footer-content">
+          <p> </p>
+          <div class="footer-links">
+            <a routerLink="/terms">Terms of Service</a>
+            <a routerLink="/privacy-policy">Privacy Policy</a>
+            <a routerLink="/contact">Contact Us</a>
+    
+          </div>
+        </div>
+      </footer>
+
+
+
+
+      <h2 class="title">Available Plans</h2>
+<div *ngIf="plans.length > 0; else noPlans" class="plans-container">
+  <div *ngFor="let plan of plans" class="plan-card">
+    <h3 class="plan-title">{{ plan.planName }}</h3>
+    <p class="plan-description">{{ plan.description }}</p>
+    <p class="plan-price"><strong>Price:</strong> ${{ plan.price }}</p>
+    <p class="plan-duration"><strong>Duration:</strong> {{ plan.duration }}</p>
+  </div>
+</div>
+
+<ng-template #noPlans>
+  <p class="no-plans-message">No plans available at the moment.</p>
+</ng-template>
+</body>
+</html>

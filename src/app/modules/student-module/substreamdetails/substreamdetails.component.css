@@ -1,0 +1,110 @@
+/* Main container: Enables horizontal scrolling */
+.substreamdetails-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 25px;
+  padding: 20px;
+  max-width: 100%;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+
+}
+.container{
+  margin-top: 60px;
+}
+
+/* Image row */
+.image-row {
+  display: flex;
+  gap: 25px;
+  padding: 10px;
+  justify-content: center;
+}
+
+/* Course images */
+.course-image {
+  width: 1000px; /* Big width */
+  height: 400px; /* Big height */
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.course-image:hover {
+  transform: scale(1.05);
+}
+
+/* Description row: NOW HORIZONTAL */
+.description-row {
+  display: flex;
+  gap: 25px;
+  padding: 10px;
+  justify-content: center;
+  margin-top: 10px;
+  overflow-x: auto; /* Enables scrolling */
+  flex-wrap: nowrap; /* Prevents stacking */
+}
+
+/* Course description (Now Horizontal) */
+.course-details {
+  width: 1000px; /* Same as image width */
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  text-align: left; /* Align text to left */
+  transition: transform 0.3s ease-in-out;
+}
+
+.course-details:hover {
+  transform: translateY(-5px);
+}
+
+.course-details h3 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.course-details p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Footer Section */
+.footer {
+  background: #222;
+  color: white;
+  padding: 25px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.footer h2 {
+  margin-bottom: 12px;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Colleges displayed in a row */
+.colleges-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.college-name {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  transition: background 0.3s ease-in-out;
+}
+
+.college-name:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

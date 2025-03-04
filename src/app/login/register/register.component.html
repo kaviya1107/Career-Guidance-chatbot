@@ -1,0 +1,83 @@
+<div class="container">
+  <h2>Register</h2>
+  <form #registerform="ngForm" (ngSubmit)="submitForm(registerform)">
+    <!-- User Name Input -->
+    <div class="form-group">
+      <label for="firstName">Username</label>
+      <input type="text" id="firstName" #firstName="ngModel" name="firstName" [(ngModel)]="userName"
+        class="form-control" minlength="4" (ngModelChange)="validateUsername()" required />
+      <div *ngIf="firstName.invalid && (firstName.touched || firstName.dirty || isFormSubmitted)" class="text-danger">
+        <span *ngIf="firstName.errors?.['required']">A username is required.</span>
+        <span *ngIf="firstName.errors?.['minlength']">Minimum 3 characters required.</span>
+      </div>
+      <div *ngIf="isUsernameInvalid" class="text-danger">
+        Username must contain at least one uppercase letter.
+      </div>
+    </div>
+    <!-- User Type Selection Dropdown -->
+    <div class="form-group">
+      <label for="userType">User Type</label>
+      <select id="userType" name="userType" [(ngModel)]="userType" class="form-control" required>
+        <option value="">Select User Type</option>
+        <option value="student">Student</option>
+        <option value="jobseeker">Job Seeker</option>
+      </select>
+      <div *ngIf="isFormSubmitted && !userType" class="text-danger">
+        Please select a user type.
+      </div>
+    </div>
+    <!-- Email Input -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" [(ngModel)]="email" #emailField="ngModel" class="form-control"
+        required pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" (input)="emailExistsornot()" />
+
+      <div *ngIf="(emailField.invalid && ( emailField.touched ||emailField.dirty|| isFormSubmitted))"
+        class="text-danger">
+        <span *ngIf="emailField.errors?.['required']">Email is required.</span>
+        <span *ngIf="emailField.errors?.['pattern']">Please enter a valid email address.</span>
+      </div>
+
+      <div *ngIf="emailExists" class="text-danger">
+        <span>Email Already Exists</span>
+      </div>
+    </div>
+
+    <!-- Password Input -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" #passWords="ngModel" name="password" [(ngModel)]="password"
+        (input)="validatepassword()" class="form-control" minlength="8" required>
+      <div *ngIf="(passWords.touched || passWords.dirty || isFormSubmitted)" class="text-danger">
+        <span *ngIf="passWords.errors?.['required']">Password is required</span> <br>
+
+        <div *ngIf="passWords.value.length>0">
+          <ul *ngIf="!isPasswordValidLength || !hasSpecialChar || !hasCapitalLetter || !hasNumber">
+            <li [ngClass]="{'invalid': !isPasswordValidLength}">Minimum 8 characters</li>
+            <li [ngClass]="{'invalid': !hasSpecialChar}">Minimum 1 special character</li>
+            <li [ngClass]="{'invalid': !hasCapitalLetter}">Minimum 1 capital letter</li>
+            <li [ngClass]="{'invalid': !hasNumber}">Minimum 1 number</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Password Input  -->
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" #pass="ngModel" name="confirmPassword" [(ngModel)]="confirmPassword"
+        class="form-control" (input)="checkPasswordMatch()" required />
+      <div *ngIf="pass.invalid && (pass.touched || pass.dirty) || isFormSubmitted "  class="text-danger">
+        <span *ngIf="pass.errors?.['required']">ConfirmPassword is Required</span>
+      </div>
+    <div *ngIf="checkPasswordMatch()" class="text-danger" ><span>Passwords do not match.</span></div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit">Register</button>
+  </form>
+
+  <div class="create-account">
+    <p>Already have an account? <a [routerLink]="['/commonlogin']">Login here</a></p>
+  </div>
+</div>
