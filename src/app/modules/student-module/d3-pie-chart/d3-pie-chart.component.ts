@@ -2,8 +2,6 @@ import { Component,OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { ChatserviceService } from '../../../services/chatservice.service';
 
-
-
 @Component({
   selector: 'app-d3-pie-chart',
   standalone: true,

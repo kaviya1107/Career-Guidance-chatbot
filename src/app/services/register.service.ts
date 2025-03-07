@@ -23,6 +23,7 @@ export class RegisterService {
     console.log("Registering user...");
     return this.http.post(this.baseUrl, data, { headers: this.headers });
   }
+
   // Get all users for the admin page
   getAllUser(): Observable<any> {
     const url = `${this.baseUrl}/_design/view/_view/register_by_email?include_docs=true`;
@@ -35,7 +36,6 @@ export class RegisterService {
   }
 
   //For Session
-
   setUserdata(name: string) {
     localStorage.setItem('loggedInUser', JSON.stringify(name));
   }
@@ -137,6 +137,7 @@ export class RegisterService {
     const url = `${this.baseUrl}/${intent._id}`;
     return this.http.put(url, intent, { headers: this.headers });
   }
+
   // Generate patterns for chatbot intents
   generatePatterns(name: string): string[] {
     const patterns = [
