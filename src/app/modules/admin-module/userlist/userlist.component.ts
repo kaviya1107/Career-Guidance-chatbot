@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterService } from '../../../services/register.service';
+import { RegisterService } from '../../../services/couchdb.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
-import { ChatserviceService } from '../../../services/chatservice.service';
 
 
 @Component({
@@ -16,25 +15,25 @@ import { ChatserviceService } from '../../../services/chatservice.service';
 })
 export class UserlistComponent implements OnInit {
   userList: any;
+  
   isFormVisible = false;
   isCoursesFormVisible = false;
   isFormSubmitted = false;
   isJobFormVisible = false;
   isSubstreamFormVisible = false;
+
   subStreams: string[] = [];
   streamNameIdMap: Map<string, string> = new Map();
   selectedStream: string = "";
-
-  intentsValues: any = "";
-  intents: any;
+  streamOptions: string[] = [];
 
   newPlan = {
     _id: `pricing_2_${uuidv4()}`,
     data: {
       planName: '',
       description: '',
-      price:null,
-      duration: null,
+      price:0,
+      duration: 0,
       type: 'pricing'
     }
   };
@@ -78,37 +77,18 @@ export class UserlistComponent implements OnInit {
     }
   };
 
-  streamOptions: string[] = [''];
+
 
   constructor(readonly registerService: RegisterService) { }
 
   ngOnInit(): void {
     this.fetchUserList();
     this.fetchSubstream();
-    this.fetchCourses();
-    this.getIntentsDoc();
-
   }
-
-  getIntentsDoc() {
-    this.registerService.getIntentDoc().subscribe({
-      next: (response: any) => {
-        const intentsData = {
-          _id: response._id,
-          _rev: response._rev,
-          intents: response.intents
-        };
-        this.intents = intentsData;
-      },
-      error: (error: any) => {
-        console.error('Error fetching intents:', error);
-      }
-    });
-  }
-
   fetchUserList() {
     this.registerService.getAllUser().subscribe({
       next: (response: any) => {
+        console.log("res",response)
         this.userList = response.rows.map((row: any) => row.doc.data);
         console.log("in users", this.userList);
       },
@@ -119,28 +99,19 @@ export class UserlistComponent implements OnInit {
   }
 
   fetchSubstream(): void {
-    this.registerService.getCourses().subscribe({
+    this.registerService.getStreams().subscribe({
       next: (response: any) => {
-        this.streamNameIdMap.clear();
+        console.log("getstream",response)
+        this.streamNameIdMap.clear(); //Prevents duplicate data when re-fetching.
         response.rows.forEach((user: any) => {
-          this.streamNameIdMap.set(user.value, user.key);
+          this.streamNameIdMap.set(user.value, user.key); //key-id value-streamname
         });
-        this.streamOptions = Array.from(this.streamNameIdMap.keys());
+        this.streamOptions = Array.from(this.streamNameIdMap.keys()); //all stream names from streamNameIdMap and converts them into an array.
         console.log("option", this.streamOptions);
       },
       error: (error: any) => {
         console.error('Error fetching subStreams:', error);
       }
-    });
-  }
-
-  fetchCourses() {
-    this.registerService.getCourses().subscribe({
-      next: (response: any) => {
-        this.subStreams = response.rows.map((row: any) => row);
-        console.log("in fetch courses", this.subStreams);
-      },
-      error: (error: any) => console.error('Error fetching courses:', error)
     });
   }
 
@@ -175,30 +146,15 @@ export class UserlistComponent implements OnInit {
       return
     }
 
-    const response = this.newPlan.data.description;
-    const pattern = this.newPlan.data.planName;
-    const generatedPatterns = this.registerService.generatePatterns(pattern);
-    const newIntent = {
-      tag: this.newPlan.data.planName,
-      patterns: generatedPatterns,
-      responses: [response],
-      context: ['']
-    };
-
-    if (this.intents) {
-      this.intents.intents.push(newIntent);
-    }
-
     const planData = {
       ...this.newPlan,
       createdAt: new Date().toISOString(),
     };
 
-    this.updateIntents();
     this.registerService.addPlan(planData).subscribe({
       next: () => {
         alert('Plan added successfully.');
-        this.newPlan = { _id: `pricing_2_${uuidv4()}`, data: { planName: '', description: '', price: null, duration: null, type: 'pricing' } };
+        this.resetForm();
         this.isFormVisible = false;
       },
       error: (err: any) => {
@@ -208,39 +164,7 @@ export class UserlistComponent implements OnInit {
     });
   }
 
-
-  updateIntents() {
-    this.registerService.updateIntent(this.intents).subscribe({
-      next: (response: any) => {
-        console.log('Intent updated successfully:', response);
-        this.getIntentsDoc();
-      },
-      error: (error: any) => {
-        if (error.status === 409) {
-          console.warn("Conflict detected. Fetching latest _rev and retrying...");
-          this.getIntentsDoc();
-          setTimeout(() => this.updateIntents(), 500); // Retry after a short delay
-        } else {
-          console.error('Error updating intents:', error);
-        }
-      }
-    });
-  }
-
-  addCoursesAndColleges() {
-    const response = this.newCourses.data.description;
-    const pattern = this.newCourses.data.streamName;
-    const generatedPatterns = this.registerService.generatePatterns(pattern);
-    const newIntent = {
-      tag: this.newCourses.data.streamName,
-      patterns: generatedPatterns,
-      responses: [response],
-      context: ['']
-    };
-
-    if (this.intents) {
-      this.intents.intents.push(newIntent);
-    }
+  addStreamsAndColleges() {
 
     this.isFormSubmitted = true;
 
@@ -261,17 +185,17 @@ export class UserlistComponent implements OnInit {
     const streamData = {
       _id: `stream_2_${uuidv4()}`,
       data: {
-        streamName: this.newCourses.data.streamName,
-        description: this.newCourses.data.description,
-        imageUrl: this.newCourses.data.imageUrl,
-        type: this.newCourses.data.type,
+        streamName: this.newCourses.data.streamName.toLowerCase(),
+        description: this.newCourses.data.description.toLowerCase(),
+        imageUrl: this.newCourses.data.imageUrl.toLowerCase(),
+        type: this.newCourses.data.type.toLowerCase(),
         createdAt: new Date().toISOString()
       }
     };
 
-    this.updateIntents();
-    this.registerService.addCourses(streamData).subscribe({
+    this.registerService.addStreams(streamData).subscribe({
       next: (response: any) => {
+        console.log("demo",response)
         if (response && response.id) {
           const streamId = response.id;
           const collegesArray: string[] = this.newCourses.data.colleges.split(',').map(college => college.trim());
@@ -290,6 +214,7 @@ export class UserlistComponent implements OnInit {
             this.registerService.addColleges(collegeData).subscribe({
               next: (collegeResponse) => {
                 console.log('Added:', collegeResponse);
+                this.resetForm();
               },
               error: (err: any) => {
                 console.error('Error adding college:', err);
@@ -298,7 +223,7 @@ export class UserlistComponent implements OnInit {
           });
         }
         alert('Course and associated colleges added successfully.');
-        this.newCourses = { _id: '', data: { streamName: '', description: '', imageUrl: '', colleges: '', type: 'stream' } };
+        this.resetForm();
         this.isCoursesFormVisible = false;
       },
       error: (err: any) => {
@@ -309,21 +234,9 @@ export class UserlistComponent implements OnInit {
   }
 
   addSubstream() {
-    const response = this.newSubstream.data.description;
-    const pattern = this.newSubstream.data.substreamName;
-    const generatedPatterns = this.registerService.generatePatterns(pattern);
-    const newIntent = {
-      tag: this.newSubstream.data.substreamName,
-      patterns: generatedPatterns,
-      responses: [response],
-      context: ['']
-    };
-    if (this.intents) {
-      this.intents.intents.push(newIntent);
-    }
 
     this.isFormSubmitted = true;
-    this.newSubstream.data.streamId = this.streamNameIdMap.get(this.selectedStream) ?? "";
+    this.newSubstream.data.streamId = this.streamNameIdMap.get(this.selectedStream) ?? ""; //..
 
     if (!this.newSubstream.data.substreamName || !this.newSubstream.data.description || !this.newSubstream.data.extraDescription ||
       !this.newSubstream.data.duration || !this.newSubstream.data.extraImageUrl || !this.newSubstream.data.imageUrl) {
@@ -335,10 +248,10 @@ export class UserlistComponent implements OnInit {
       ...this.newSubstream,
     };
 
-    this.updateIntents();
     this.registerService.addPlan(substream).subscribe({
       next: () => {
         alert('Substream added successfully.');
+        this.resetForm();
         this.isSubstreamFormVisible = false;
       },
       error: (err: any) => {
@@ -349,17 +262,6 @@ export class UserlistComponent implements OnInit {
   }
 
   addJobDetails() {
-    const response = this.newJob.data.description;
-    const generatedPatterns = this.registerService.generatePatterns(response);
-    const newIntent = {
-      tag: this.newJob.data.companyName,
-      patterns: generatedPatterns,
-      responses: [response],
-      context: ['']
-    };
-    if (this.intents) {
-      this.intents.intents.push(newIntent);
-    }
 
     this.isFormSubmitted = true;
 
@@ -373,12 +275,10 @@ export class UserlistComponent implements OnInit {
     const jobData = {
       ...this.newJob,
     };
-
-    this.updateIntents();
     this.registerService.addJob(jobData).subscribe({
       next: () => {
         alert('Job added successfully!');
-        this.newJob = { _id: '', data: { companyName: '', location: '', jobRole: '', email: '', applyLink: '', description: '', experience: '', type: 'job-details' } };
+        this.resetForm();
         this.isJobFormVisible = false;
       },
       error: (error: any) => {
@@ -387,10 +287,11 @@ export class UserlistComponent implements OnInit {
       }
     });
   }
+
   resetForm() {
-    this.newPlan.data = { planName: '', description: '', price: null, duration: null, type: '' };
-    this.newJob.data = { companyName: '', location: '', jobRole: '', email: '', applyLink: '', description: '', experience: '', type: '' };
-    this.newSubstream.data = { substreamName: '', description: '', imageUrl: '', extraDescription: '', extraImageUrl: '', duration: '', streamId: '', type: '' };
-    this.newCourses.data = { streamName: '', description: '', imageUrl: '', colleges: '', type: '' };
+    this.newPlan = { _id: '', data: { planName: '', description: '', price: 0, duration: 0, type: 'pricing' }};
+    this.newJob ={ _id: '', data: {  companyName: '', location: '', jobRole: '', email: '', applyLink: '', description: '', experience: '', type: 'job-details' }};
+    this.newSubstream = { _id: '', data: { substreamName: '', description: '', imageUrl: '', extraDescription: '', extraImageUrl: '', duration: '', streamId: '', type: 'substream' }};
+    this.newCourses = { _id: '', data: { streamName: '', description: '', imageUrl: '', colleges: '', type: 'stream' }};
   }
 }

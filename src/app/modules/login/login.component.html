@@ -1,0 +1,37 @@
+<div class="container">
+    <h2>Login</h2>
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+      <!-- Email Input -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email"[(ngModel)]="email"class="form-control"required (input)="emailError=''"/>
+        <div *ngIf="isFormSubmitted && !email" class="text-danger">
+          Email is Required
+        </div>
+        <div *ngIf="emailError">
+          <span>{{emailError}}</span>
+        </div>
+      </div>
+  
+      <!--Password Input-->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" [(ngModel)]="password"class="form-control" required minlength="6" (input)="passwordError=''"/>
+        <div *ngIf="isFormSubmitted && (!password || password.length < 6)" class="text-danger">
+          Password is Required
+        </div>
+        <div *ngIf="passwordError">
+          <span>{{passwordError}}</span>
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit">Login</button>
+    </form>
+  
+    <!-- Create Account Link -->
+    <div class="create-account">
+      <p> Don't have an account? <a [routerLink]="['/register']">Create an Account</a></p>
+    </div>
+  </div>
+  

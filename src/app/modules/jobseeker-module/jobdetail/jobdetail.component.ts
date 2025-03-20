@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RegisterService } from '../../../services/register.service';
+import { RegisterService } from '../../../services/couchdb.service';
 import { CommonModule } from '@angular/common';
 
 

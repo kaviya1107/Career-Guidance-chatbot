@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterService } from '../../../services/register.service';
+import { RegisterService } from '../../../services/couchdb.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -29,6 +29,8 @@ export class SubstreamsComponent implements OnInit {
   fetchSubstream(): void {
     this.registerService.getSubstream().subscribe({ 
       next: (data: any) => {
+        console.log(data.rows);
+        
         this.substream = data.rows
           .map((row: any) => row.doc)
           .filter((e: any) => e.data.streamId === this.streamId);
@@ -39,11 +41,11 @@ export class SubstreamsComponent implements OnInit {
       }
     });
   }
-  navigateTo(subStream: any) {
+  navigateTo(subStreamId: any) {
     console.log("Sub Stream before navigating");
-    console.log(subStream);
+    console.log(subStreamId);
     this.clickedData = this.substream.find((e) => {
-      return e._id === subStream
+      return e._id === subStreamId
     })
     console.log("Clicked Data : ");
     
@@ -53,7 +55,7 @@ export class SubstreamsComponent implements OnInit {
       next : (response) =>{
         console.log(response)
         console.log("Updated success");
-        this.router.navigate([`/substream`, subStream]);
+        this.router.navigate([`/substream`, subStreamId]);
         console.log("Navigated"); 
 
       },

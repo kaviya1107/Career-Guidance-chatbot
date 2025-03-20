@@ -1,15 +1,14 @@
-
 <div class="chat-container">
-    <div class="chat-header">Chatbot</div>
-    <div class="chat-box">
+  <div class="chat-header">Chatbot</div>
+  <div class="chat-box" #chatBox>
       <div *ngFor="let message of messages" 
            [ngClass]="{'chat-bubble': true, 'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
-        {{ message.text }}
+          {{ message.text }}
       </div>
-    </div>
-    <div class="chat-input">
+  </div>
+  <div class="chat-input">
       <input [(ngModel)]="userInput" id="userInput" type="text" placeholder="Type your message..." (keyup.enter)="sendMessage()" />
       <button (click)="sendMessage()">Send</button>
-      <button (click)="startListening()">🎤</button>
-    </div>
+      <!-- <button class="voice-button" (click)="startListening()">🎤</button> -->
   </div>
+</div>

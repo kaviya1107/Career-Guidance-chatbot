@@ -1,0 +1,243 @@
+.landing-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background-image {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover; /* Ensures the image covers the full screen */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Moves text to top and button to bottom */
+    align-items: center;
+    padding: 50px 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.welcome-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.get-started {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 90px; /* Push button down */
+}
+
+.get-started:hover {
+    background-color: #0056b3;
+}
+.cards-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+}
+
+.cards-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s;
+    border: 2px solid #f1f1f1;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card h3 {
+    margin: 15px 0;
+    font-size: 1.2rem;
+    color: #222;
+}
+
+.info p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.card button {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.card button:hover {
+    background-color: #e64a19;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+.landing-container {
+    position: relative;
+    text-align: center;
+}
+
+.background-image {
+    width: 100%;
+    height: 90vh;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.get-started:hover {
+    background-color: #e64a19;
+}
+
+/* Why Choose Us */
+.why-choose-us {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.features-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    width: 300px;
+    text-align: center;
+}
+
+.feature img {
+    width: 100px;
+}
+
+.feature h3 {
+    margin: 10px 0;
+}
+
+/* How It Works */
+.how-it-works {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.step {
+    width: 250px;
+    text-align: center;
+}
+
+.step img {
+    width: 80px;
+}
+
+/* Testimonials */
+.testimonials {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.testimonial-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.testimonial {
+    width: 300px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial h4 {
+    color: #555;
+    margin-top: 10px;
+}
+
+/* Contact Us */
+.contact-us {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #ff5722;
+    color: white;
+}
+
+.contact-us button {
+    padding: 15px 30px;
+    font-size: 1em;
+    background-color: white;
+    color: #ff5722;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.contact-us button:hover {
+    background-color: #e64a19;
+    color: white;
+}

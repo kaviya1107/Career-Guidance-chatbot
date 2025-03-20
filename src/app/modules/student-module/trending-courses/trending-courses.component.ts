@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RegisterService } from '../../../services/register.service';
+import { RegisterService } from '../../../services/couchdb.service';
 import { CommonModule } from '@angular/common';
 
 
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class TrendingCoursesComponent {
 
   subStreamDetails : any = [];
-  substream:any;
+ 
   ngOnInit():void{
     this.fetchSubstream();
   }
@@ -22,7 +22,7 @@ export class TrendingCoursesComponent {
   fetchSubstream():void{
     this.registerService.getClickCount().subscribe({
       next:(response:any)=>{
-        response.rows.splice(8,response.rows.length - 8);
+        response.rows.splice(8,response.rows.length );
         response.rows.forEach((e :any)=>{
           this.registerService.getParticularSubStream(e.value).subscribe({
             next : (response) =>{

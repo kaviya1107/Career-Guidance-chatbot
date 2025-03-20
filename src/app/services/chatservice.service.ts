@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,27 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class ChatserviceService {
 
-  readonly apiUrl = 'http://127.0.0.1:5000'; // Base URL of your Flask backend
+  readonly apiUrl = 'http://127.0.0.1:5000'; // Base URL of  Flask
 
-  constructor(private http: HttpClient) {}
+  constructor(readonly http: HttpClient) {}
 
   // Send user message and get bot response
-  getBotResponse(userInput: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/chat`, { message: userInput });
-  }
-
-  // Fetch all analytics data
-  getAnalytics(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/analytics`);
-  }
-
-  // Fetch performance metrics
-  getPerformanceMetrics(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/metrics`);
-  }
-
-  // Fetch intent analysis data (correct predictions vs null intents)
-  getIntentAnalysis(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/intent-analysis`);
+  getBotResponse(userInput: string){
+    return this.http.post(`${this.apiUrl}/chat`, { message: userInput });
   }
 }

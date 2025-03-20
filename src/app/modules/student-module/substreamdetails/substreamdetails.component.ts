@@ -1,7 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RegisterService } from '../../../services/register.service';
+import { RegisterService } from '../../../services/couchdb.service';
 
 @Component({
   selector: 'app-substreamdetails',

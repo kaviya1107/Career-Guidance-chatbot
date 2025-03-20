@@ -27,6 +27,23 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #ccc transparent; /* Firefox scrollbar color */
+  height: 300px;
+}
+
+/* Custom scrollbar for WebKit browsers */
+.chat-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .chat-bubble {

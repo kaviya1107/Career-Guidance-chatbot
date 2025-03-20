@@ -4,7 +4,6 @@
         <div class="substreamdetails-card" *ngFor="let subStream of subStreamDetails">
             <img [src]="subStream.data.extraImageUrl" alt="Course" class="course-image" />
             <div class="course-details">
-              <h3>{{ subStream.data.duration }}</h3>
               <p>{{ subStream.data.extraDescription }}</p>
             </div>
           </div>

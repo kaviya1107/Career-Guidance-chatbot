@@ -1,34 +1,21 @@
+<div class="search-container">
+  <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchCourses()" placeholder="Search courses..." class="search-bar">
+</div>
+
 <div class="courses-container">
-  <div class="course-card" *ngFor="let course of courses">
-    <img [src]="course.data.imageUrl" alt="Course Image" class="course-image" />
+  <div class="course-card" *ngFor="let course of filteredStreams">
+    <img [src]="course.data.imageUrl ?? course.data.imageurl" alt="Course Image" class="course-image" />
     <div class="course-details">
-      <h3>{{ course.data.stream_Name }}</h3>
-      <p>{{ course.data.description }}</p>
+      <h3>{{ course.data.stream_Name ?? course.data.substream_Name }}</h3>
+      <p>{{ course.data.description ?? course.data.description}}</p>
 
-      <!-- Conditionally show buttons based on stream type -->
-      <button *ngIf="course.data.stream_Name.toLowerCase().includes('medical')" 
-              class="btn" 
-              (click)="navigateTo(course._id)">Medical Details</button>
-              
-      <button *ngIf="course.data.stream_Name.toLowerCase().includes('engineering')" 
-              class="btn" 
-              (click)="navigateTo(course._id)">Engineering Details</button>
-
-         <button *ngIf="course.data.stream_Name.toLowerCase().includes('law')" 
-              class="btn" 
-              (click)="navigateTo(course._id)">Law Details</button>
-
-      <button *ngIf="course.data.stream_Name.toLowerCase().includes('arts')" 
-              class="btn" 
-              (click)="navigateTo(course._id)">Arts & Science</button>
-              
-      <button *ngIf="course.data.stream_Name.toLowerCase().includes('design')" 
-              class="btn" 
-              (click)="navigateTo(course._id)">Designing Details</button>
-
-      <button *ngIf="course.data.stream_Name.toLowerCase().includes('business')" 
-              class="btn" 
-              (click)="navigateTo(course._id)">Business Details</button> 
+      <ng-container *ngFor="let category of courseCategories">
+        <button *ngIf="course.data?.stream_Name?.toLowerCase().includes(category.key) ?? course.data?.substream_Name.toLowerCase().includes(category.key)"
+                class="btn"
+                (click)="navigateTo(course._id)">
+          {{ category.label }}
+        </button>
+      </ng-container>
     </div>
   </div>
 </div>
